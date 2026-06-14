@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { products, categories, heroImage } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
@@ -162,42 +163,7 @@ function BrandStory() {
             Inspired by Love:<br />
             <em className="text-blush">The SVOJAS.CO story.</em>
           </h2>
-          <div className="mt-5 max-w-xl space-y-4 text-blush/70 leading-relaxed text-sm">
-            <p>
-              Every piece of ornament tells a story, but ours began with a dream, an obsession,
-              and a daughter's profound admiration, inspiration and love by her mother.
-            </p>
-            <p>
-              Founded in 2025 by Bhakti Bandak, SVOJAS.CO didn't begin in a corporate boardroom,
-              but rather in a quiet room filled with sketches, determination, and a relentless passion.
-              Our founder embarked on this journey of entrepreneurship entirely alone, driven by her
-              mother's inspiration and unwavering support.
-            </p>
-            <p>
-              Growing up, Bhakti was deeply inspired by her mother who is a dedicated business owner
-              herself. Watching her mother navigate the business world while gracefully adoring and
-              admiring her jewellery, she realized that jewellery is never just an accessory; it is a
-              living diary of a woman's milestones, strength, and memories.
-            </p>
-            <p>
-              Taking a massive leap of faith, she launched SVOJAS.CO alongside the demanding
-              schedules of her engineering degree. Balancing late-night academic challenges with
-              early-morning design curation, her dedication bloomed beautifully — allowing her to
-              achieve complete financial independence at just 20 years old.
-            </p>
-            <p>
-              Beyond a personal milestone, SVOJAS is a tribute to the incredible hands that bring
-              these visions to life. We believe that true luxury cannot be mass-produced by machines.
-              Every single piece of SVOJAS jewellery is thoughtfully sourced and brought to life by
-              local karigars (artisans) who pour hours of hard work, generational skill, and pure
-              love into every curve, shine, and setting.
-            </p>
-            <p>
-              When you wear a piece from SVOJAS, you are not just wearing jewellery — you are wearing
-              a piece of an artisan's heart, a founder's dream, and a timeless story crafted just for you.
-            </p>
-          </div>
-          <Link to="/our-story" className="btn-outline mt-7">Read Our Story</Link>
+          <ExpandableStory />
         </div>
       </div>
     </section>
