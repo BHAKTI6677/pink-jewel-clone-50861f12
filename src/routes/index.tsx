@@ -40,7 +40,7 @@ function Hero() {
             <em className="text-blush">Inherited</em> tomorrow.
           </h1>
           <p className="mt-5 max-w-md text-base leading-relaxed text-blush/70">
-            SVOJAS.CO crafts premium jewelry for occasions, cherishable moments and real milestones.
+            SVOJAS.CO crafts premium jewellery for occasions, cherishable moments and real milestones.
             Everyday statements made to celebrate the extraordinary in you.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -176,7 +176,7 @@ function BrandStory() {
             <p>
               Growing up, Bhakti was deeply inspired by her mother who is a dedicated business owner
               herself. Watching her mother navigate the business world while gracefully adoring and
-              admiring her jewellery, she realized that jewelry is never just an accessory; it is a
+              admiring her jewellery, she realized that jewellery is never just an accessory; it is a
               living diary of a woman's milestones, strength, and memories.
             </p>
             <p>
@@ -193,7 +193,7 @@ function BrandStory() {
               love into every curve, shine, and setting.
             </p>
             <p>
-              When you wear a piece from SVOJAS, you are not just wearing jewelry — you are wearing
+              When you wear a piece from SVOJAS, you are not just wearing jewellery — you are wearing
               a piece of an artisan's heart, a founder's dream, and a timeless story crafted just for you.
             </p>
           </div>
