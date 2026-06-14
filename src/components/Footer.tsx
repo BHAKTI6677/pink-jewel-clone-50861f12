@@ -8,10 +8,6 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
             <p className="font-display text-2xl tracking-[0.4em]">SVOJAS<span className="text-gold">.</span>CO</p>
-            <p className="mt-4 max-w-sm text-sm text-blush/70 leading-relaxed">
-              Heirloom jewellery, hand-finished in Jaipur. Made slowly, signed quietly,
-              meant to outlive trends.
-            </p>
             <div className="mt-5 flex items-center gap-3">
               <a href="https://instagram.com" aria-label="Instagram" className="grid h-9 w-9 place-items-center border border-blush/30 hover:border-blush hover:text-blush transition">
                 <Instagram className="h-4 w-4" />
@@ -58,8 +54,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-blush/15 pt-5 text-xs text-blush/60 md:flex-row md:items-center">
-          <p>© MMXXVI SVOJAS.CO — Founded by Bhakti Bandak in Jaipur.</p>
-          <p className="uppercase tracking-[0.22em]">All pieces hallmarked & signed</p>
+          <p>© 2025 SVOJAS.CO — Founded by BHAKTI BANDAK.</p>
         </div>
       </div>
     </footer>
