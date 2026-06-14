@@ -20,7 +20,7 @@ function OurStory() {
         <header className="max-w-2xl">
           <p className="eyebrow">Our Story</p>
           <h1 className="mt-3 font-display text-4xl text-blush-soft sm:text-5xl">
-            One quiet workshop. <em className="text-blush">Forty-two women.</em>
+            Crafted by obsession, <em className="text-blush">inspired by love.</em>
           </h1>
         </header>
 
