@@ -33,25 +33,19 @@ function Hero() {
     <section className="relative overflow-hidden">
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-6 py-12 lg:grid-cols-12 lg:gap-10 lg:px-10 lg:py-16">
         <div className="lg:col-span-6 lg:pr-6">
-          <p className="eyebrow shimmer">New Arrivals · MMXXVI</p>
+          <p className="eyebrow shimmer">New Arrivals</p>
           <h1 className="mt-5 font-display text-5xl leading-[1.02] text-blush-soft sm:text-6xl lg:text-7xl">
             Worn today.
             <br />
             <em className="text-blush">Inherited</em> tomorrow.
           </h1>
           <p className="mt-5 max-w-md text-base leading-relaxed text-blush/70">
-            SVOJAS.CO is a small atelier of women goldsmiths in Jaipur, hand-finishing
-            jewellery in 22-karat gold, Burmese rubies and uncut rose quartz —
-            one piece at a time.
+            SVOJAS.CO crafts premium jewelry for occasions, cherishable moments and real milestones.
+            Everyday statements made to celebrate the extraordinary in you.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link to="/shop" className="btn-primary">Shop the Collection</Link>
             <Link to="/our-story" className="btn-outline">Our Story</Link>
-          </div>
-          <div className="mt-8 grid grid-cols-3 gap-6 border-t border-border/40 pt-6 text-xs uppercase tracking-[0.22em] text-blush/60">
-            <div><span className="block font-display text-2xl text-blush normal-case tracking-normal">22k</span>Gold purity</div>
-            <div><span className="block font-display text-2xl text-blush normal-case tracking-normal">14 day</span>Returns</div>
-            <div><span className="block font-display text-2xl text-blush normal-case tracking-normal">Free</span>Polish</div>
           </div>
         </div>
         <div className="lg:col-span-6">
@@ -64,11 +58,6 @@ function Hero() {
               height={1920}
               className="relative aspect-[4/5] w-full rounded-sm object-cover shadow-2xl shadow-black/30"
             />
-            <div className="absolute -bottom-4 -left-4 hidden sm:block bg-maroon border border-border px-4 py-3 rounded-sm shadow-lg max-w-[200px]">
-              <p className="eyebrow text-[10px]">Featured</p>
-              <p className="mt-1 font-display text-lg text-blush-soft">Rohini Layered Set</p>
-              <p className="text-xs text-blush/60 mt-1">Three strands · solid gold</p>
-            </div>
           </div>
         </div>
       </div>
@@ -77,7 +66,12 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = ["Hallmarked 22k Gold", "Hand-set Gemstones", "Made in Jaipur", "Carbon-Neutral Shipping", "Lifetime Re-polish"];
+  const items = [
+    "18K Gold Plated",
+    "Meticulously Crafted for Durability",
+    "Timeless Silhouettes, Premium Quality",
+    "Unbox an Unforgettable Experience",
+  ];
   return (
     <div className="border-y border-border bg-maroon/40 overflow-hidden">
       <div className="flex gap-12 px-6 py-3 text-[11px] uppercase tracking-[0.32em] text-blush/80 whitespace-nowrap animate-[marquee_30s_linear_infinite]">
@@ -164,15 +158,45 @@ function BrandStory() {
         <div className="lg:col-span-6">
           <p className="eyebrow">Our Story</p>
           <h2 className="mt-4 font-display text-3xl leading-tight text-blush-soft sm:text-4xl">
-            Forty-two women.<br />
-            One quiet workshop in the<br />
-            <em className="text-blush">old city of Jaipur.</em>
+            Crafted by Obsession,<br />
+            Inspired by Love:<br />
+            <em className="text-blush">The SVOJAS.CO story.</em>
           </h2>
-          <p className="mt-5 max-w-xl text-blush/70 leading-relaxed text-sm">
-            Founded in 2019 by Bhakti Bandak, SVOJAS.CO began with a single ruby
-            pendant set on a kitchen table. Today, every piece still begins as a
-            hand-drawn sketch and ends in the hands of one of our karigars.
-          </p>
+          <div className="mt-5 max-w-xl space-y-4 text-blush/70 leading-relaxed text-sm">
+            <p>
+              Every piece of ornament tells a story, but ours began with a dream, an obsession,
+              and a daughter's profound admiration, inspiration and love by her mother.
+            </p>
+            <p>
+              Founded in 2025 by Bhakti Bandak, SVOJAS.CO didn't begin in a corporate boardroom,
+              but rather in a quiet room filled with sketches, determination, and a relentless passion.
+              Our founder embarked on this journey of entrepreneurship entirely alone, driven by her
+              mother's inspiration and unwavering support.
+            </p>
+            <p>
+              Growing up, Bhakti was deeply inspired by her mother who is a dedicated business owner
+              herself. Watching her mother navigate the business world while gracefully adoring and
+              admiring her jewellery, she realized that jewelry is never just an accessory; it is a
+              living diary of a woman's milestones, strength, and memories.
+            </p>
+            <p>
+              Taking a massive leap of faith, she launched SVOJAS.CO alongside the demanding
+              schedules of her engineering degree. Balancing late-night academic challenges with
+              early-morning design curation, her dedication bloomed beautifully — allowing her to
+              achieve complete financial independence at just 20 years old.
+            </p>
+            <p>
+              Beyond a personal milestone, SVOJAS is a tribute to the incredible hands that bring
+              these visions to life. We believe that true luxury cannot be mass-produced by machines.
+              Every single piece of SVOJAS jewellery is thoughtfully sourced and brought to life by
+              local karigars (artisans) who pour hours of hard work, generational skill, and pure
+              love into every curve, shine, and setting.
+            </p>
+            <p>
+              When you wear a piece from SVOJAS, you are not just wearing jewelry — you are wearing
+              a piece of an artisan's heart, a founder's dream, and a timeless story crafted just for you.
+            </p>
+          </div>
           <Link to="/our-story" className="btn-outline mt-7">Read Our Story</Link>
         </div>
       </div>
@@ -182,14 +206,13 @@ function BrandStory() {
 
 function Editorial() {
   return (
-    <section className="border-y border-border bg-maroon/30">
+    <section className="border-y border-border bg-maroon-deep/70">
       <div className="mx-auto max-w-5xl px-6 py-16 text-center lg:py-20">
         <p className="eyebrow">A Note From The Founder</p>
         <blockquote className="mt-6 font-display text-2xl leading-snug text-blush-soft sm:text-3xl md:text-4xl">
           <span className="text-gold">"</span>
-          We do not design for the trend cycle. We design for the
-          drawer your daughter will one day open, find a velvet box,
-          and feel found.
+          We do not just design for the trend cycle, but for the drawer your daughter will open
+          one day, find a velvet box, and feel found.
           <span className="text-gold">"</span>
         </blockquote>
         <p className="mt-6 text-sm uppercase tracking-[0.32em] text-blush/80">— Bhakti Bandak, Founder</p>
