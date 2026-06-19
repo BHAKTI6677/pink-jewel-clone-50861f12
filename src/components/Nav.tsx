@@ -6,8 +6,8 @@ import { useShop } from "@/context/ShopContext";
 const links = [
   { to: "/shop", label: "Shop" },
   { to: "/collections", label: "Collections" },
-  { to: "/our-story", label: "Our Story" },
   { to: "/contact", label: "Contact" },
+  { to: "/auth", label: "Login / Register" },
 ] as const;
 
 export function Nav() {

@@ -28,9 +28,9 @@ export function Footer() {
           <div>
             <p className="text-[10px] uppercase tracking-[0.28em] text-blush/50">Legal</p>
             <ul className="mt-3 space-y-2 text-sm text-blush/90">
-              <li><a href="#" className="hover:text-blush">Privacy Policy</a></li>
+              <li><Link to="/privacy-policy" className="hover:text-blush">Privacy Policy</Link></li>
               <li><a href="#" className="hover:text-blush">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-blush">Shipping Policy</a></li>
+              <li><Link to="/shipping-policy" className="hover:text-blush">Shipping Policy</Link></li>
               <li><a href="#" className="hover:text-blush">Refund Policy</a></li>
             </ul>
           </div>
