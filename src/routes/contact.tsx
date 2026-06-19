@@ -20,7 +20,7 @@ function Contact() {
       <header className="max-w-xl">
         <p className="eyebrow">Get in Touch</p>
         <h1 className="mt-3 font-display text-4xl text-blush-soft sm:text-5xl">We'd love to hear from you</h1>
-        <p className="mt-4 text-sm text-blush/70">For custom commissions, sizing, repairs, or anything else — write to us.</p>
+        <p className="mt-4 text-sm text-blush/70">For reviews, issues or queries — write to us.</p>
       </header>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_320px]">
@@ -47,13 +47,13 @@ function Contact() {
 
         <aside className="space-y-6 lg:border-l lg:border-border/40 lg:pl-10">
           <Detail icon={<MapPin className="h-4 w-4" />} title="Atelier">
-            12 Chandpole Bazaar<br />Old City, Jaipur 302001<br />Rajasthan, India
+            1-889/13, Old Jewargi Road<br />585102 — Karnataka<br />India
           </Detail>
           <Detail icon={<Mail className="h-4 w-4" />} title="Email">
-            <a href="mailto:hello@svojas.co" className="hover:text-blush">hello@svojas.co</a>
+            <a href="mailto:svojas27@gmail.com" className="hover:text-blush">svojas27@gmail.com</a>
           </Detail>
           <Detail icon={<Phone className="h-4 w-4" />} title="Phone">
-            +91 141 4000 000
+            +91 8431680311
           </Detail>
           <Detail icon={<Instagram className="h-4 w-4" />} title="Follow">
             <a href="https://instagram.com" className="hover:text-blush">@svojas.co</a>
@@ -66,10 +66,9 @@ function Contact() {
         <p className="eyebrow">Frequently Asked</p>
         <h2 className="mt-3 font-display text-3xl text-blush-soft">Quick answers</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-2">
-          <Faq q="How long does shipping take?" a="Pieces are hand-finished and ship within 4–6 days in India, 7–10 days internationally — all insured." />
-          <Faq q="What's your returns policy?" a="14-day no-questions returns on all stock pieces. Custom commissions are made to order and final sale." />
-          <Faq q="Do you re-polish?" a="Yes — complimentary re-polish for life on every piece you buy from us." />
-          <Faq q="Do you do custom?" a="We take a limited number of bespoke commissions each year. Write to us with your idea." />
+          <Faq q="How can I track my order?" a='Once your order ships, you will receive a confirmation email containing a tracking link. You can also log into your SVOJAS.CO account at any time to view your real-time shipment status under "My Orders."' />
+          <Faq q="How long will it take for my order to arrive?" a="Standard domestic orders typically ship within 24–48 hours and arrive within 6–8 business days. International shipping generally takes 10–14 business days. If you need your piece sooner, expedited shipping options are available at checkout." />
+          <Faq q="How should I clean and store my SVOJAS jewellery?" a="To keep your pieces looking pristine, gently wipe them with a soft, microfiber cloth after wearing. Store them in a cool, dry place — ideally inside the cloth pouch or a lined jewellery box to prevent scratching and minimize exposure to moisture." />
         </div>
       </section>
     </div>

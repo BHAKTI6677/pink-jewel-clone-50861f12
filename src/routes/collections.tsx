@@ -16,10 +16,6 @@ function Collections() {
     <div className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-16">
       <header className="text-center max-w-2xl mx-auto">
         <p className="eyebrow">Curated Collections</p>
-        <h1 className="mt-3 font-display text-4xl text-blush-soft sm:text-5xl">Five collections, one vocabulary</h1>
-        <p className="mt-4 text-sm leading-relaxed text-blush/70">
-          Every SVOJAS.CO piece belongs to a family — drawn from one of our five lasting collections.
-        </p>
       </header>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
