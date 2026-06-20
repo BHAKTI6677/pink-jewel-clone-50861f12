@@ -8,7 +8,7 @@ const links = [
   { to: "/shop", label: "Shop" },
   { to: "/collections", label: "Collections" },
   { to: "/contact", label: "Contact" },
-  { to: "/auth", label: "Login / Register" },
+  { to: "/auth", label: "Account" },
 ] as const;
 
 export function Nav() {
