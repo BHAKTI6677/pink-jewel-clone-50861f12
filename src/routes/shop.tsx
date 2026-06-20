@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { z } from "zod";
-import { products, categories } from "@/data/products";
+import { categories, products as staticProducts } from "@/data/products";
+import { useProducts, resolveImage } from "@/hooks/use-products";
 import { ProductCard } from "@/components/ProductCard";
 import { SlidersHorizontal, X } from "lucide-react";
 
@@ -33,16 +34,28 @@ function Shop() {
   const [sort, setSort] = useState<typeof SORTS[number]["id"]>("featured");
   const [maxPrice, setMaxPrice] = useState(100000);
   const [mobileFilters, setMobileFilters] = useState(false);
+  const { data: dbProducts } = useProducts();
+
+  const all = useMemo(() => {
+    if (dbProducts && dbProducts.length) {
+      return dbProducts.map(p => ({
+        id: p.slug, name: p.name, category: p.category,
+        price_inr: p.price_inr, image: resolveImage(p.image_url) || p.image_url,
+        alt: p.alt_text || p.name, tag: p.tag, bestseller: p.bestseller,
+      }));
+    }
+    return staticProducts;
+  }, [dbProducts]);
 
   const filtered = useMemo(() => {
-    let list = [...products];
+    let list = [...all];
     if (category) list = list.filter(p => p.category === category);
-    list = list.filter(p => p.price <= maxPrice);
-    if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
-    else if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
+    list = list.filter(p => p.price_inr <= maxPrice);
+    if (sort === "price-asc") list.sort((a, b) => a.price_inr - b.price_inr);
+    else if (sort === "price-desc") list.sort((a, b) => b.price_inr - a.price_inr);
     else if (sort === "bestseller") list.sort((a, b) => Number(b.bestseller) - Number(a.bestseller));
     return list;
-  }, [category, sort, maxPrice]);
+  }, [all, category, sort, maxPrice]);
 
   const setCategory = (slug: string | undefined) =>
     navigate({ search: slug ? { category: slug } : {} });

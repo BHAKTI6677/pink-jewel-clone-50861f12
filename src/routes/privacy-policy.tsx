@@ -153,9 +153,9 @@ function PrivacyPolicy() {
           </p>
           <p>
             <strong className="text-blush-soft">Email:</strong>{" "}
-            <a href="mailto:pearlitadcosta2@gmail.com" className="text-blush hover:underline">pearlitadcosta2@gmail.com</a>
+            <a href="mailto:svojas27@gmail.com" className="text-blush hover:underline">svojas27@gmail.com</a>
             <br />
-            <strong className="text-blush-soft">Mailing Address:</strong> Malad West, Mumbai, MH, 400095, IN
+            <strong className="text-blush-soft">Mailing Address:</strong> Karnataka, KA, 585102, IN
           </p>
         </Section>
       </div>

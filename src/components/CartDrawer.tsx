@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { useShop } from "@/context/ShopContext";
-import { formatPrice } from "@/data/products";
+import { useFormatPrice } from "@/context/CurrencyContext";
 
 export function CartDrawer() {
   const { drawerOpen, setDrawerOpen, cart, updateQty, removeFromCart, subtotal, count } = useShop();
+  const formatPrice = useFormatPrice();
 
   return (
     <>
@@ -54,7 +55,7 @@ export function CartDrawer() {
                     onClick={() => setDrawerOpen(false)}
                     className="block h-24 w-20 shrink-0 overflow-hidden bg-maroon/40"
                   >
-                    <img src={product.img} alt={product.alt} className="h-full w-full object-cover" />
+                    <img src={product.image} alt={product.alt} className="h-full w-full object-cover" />
                   </Link>
                   <div className="flex flex-1 flex-col">
                     <div className="flex items-start justify-between gap-2">
@@ -62,7 +63,7 @@ export function CartDrawer() {
                         <p className="text-[10px] uppercase tracking-[0.22em] text-blush/60">{product.category}</p>
                         <p className="font-display text-base text-blush-soft truncate">{product.name}</p>
                       </div>
-                      <p className="font-display text-sm text-blush whitespace-nowrap">{formatPrice(product.price * qty)}</p>
+                      <p className="font-display text-sm text-blush whitespace-nowrap">{formatPrice(product.price_inr * qty)}</p>
                     </div>
                     <div className="mt-auto flex items-center justify-between">
                       <div className="inline-flex items-center border border-blush/30">

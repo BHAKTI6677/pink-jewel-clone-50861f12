@@ -19,8 +19,10 @@ export function Footer() {
             <p className="text-[10px] uppercase tracking-[0.28em] text-blush/50">Customer Service</p>
             <ul className="mt-3 space-y-2 text-sm text-blush/90">
               <li><Link to="/contact" className="hover:text-blush">FAQ</Link></li>
-              <li><Link to="/contact" className="hover:text-blush">Returns</Link></li>
-              <li><Link to="/contact" className="hover:text-blush">Order Tracking</Link></li>
+              <li><Link to="/returns" className="hover:text-blush">Returns</Link></li>
+              <li><Link to="/order-tracking-info" className="hover:text-blush">Order Tracking</Link></li>
+              <li><Link to="/international-shipping" className="hover:text-blush">International Shipping</Link></li>
+              <li><Link to="/my-orders" className="hover:text-blush">My Orders</Link></li>
               <li><Link to="/contact" className="hover:text-blush">Contact Us</Link></li>
             </ul>
           </div>
@@ -29,9 +31,9 @@ export function Footer() {
             <p className="text-[10px] uppercase tracking-[0.28em] text-blush/50">Legal</p>
             <ul className="mt-3 space-y-2 text-sm text-blush/90">
               <li><Link to="/privacy-policy" className="hover:text-blush">Privacy Policy</Link></li>
-              <li><a href="#" className="hover:text-blush">Terms of Service</a></li>
+              <li><Link to="/terms-of-service" className="hover:text-blush">Terms of Service</Link></li>
               <li><Link to="/shipping-policy" className="hover:text-blush">Shipping Policy</Link></li>
-              <li><a href="#" className="hover:text-blush">Refund Policy</a></li>
+              <li><Link to="/refund-policy" className="hover:text-blush">Refund Policy</Link></li>
             </ul>
           </div>
 

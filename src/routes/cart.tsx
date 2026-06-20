@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Minus, Plus, Trash2, Tag } from "lucide-react";
 import { useShop } from "@/context/ShopContext";
-import { formatPrice } from "@/data/products";
+import { useFormatPrice } from "@/context/CurrencyContext";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/cart")({
 
 function CartPage() {
   const { cart, updateQty, removeFromCart, subtotal } = useShop();
+  const formatPrice = useFormatPrice();
   const [promo, setPromo] = useState("");
   const [applied, setApplied] = useState<string | null>(null);
 
@@ -48,14 +49,14 @@ function CartPage() {
           {cart.map(({ product, qty }) => (
             <li key={product.id} className="grid grid-cols-[100px_1fr] sm:grid-cols-[120px_1fr_auto] gap-4 sm:gap-6 py-6">
               <Link to="/product/$id" params={{ id: product.id }} className="block aspect-[4/5] overflow-hidden bg-maroon/40">
-                <img src={product.img} alt={product.alt} className="h-full w-full object-cover" />
+                <img src={product.image} alt={product.alt} className="h-full w-full object-cover" />
               </Link>
               <div className="min-w-0">
                 <p className="text-[10px] uppercase tracking-[0.22em] text-blush/60">{product.category}</p>
                 <Link to="/product/$id" params={{ id: product.id }} className="block font-display text-xl text-blush-soft hover:text-blush">
                   {product.name}
                 </Link>
-                <p className="mt-1 font-display text-base text-blush">{formatPrice(product.price)}</p>
+                <p className="mt-1 font-display text-base text-blush">{formatPrice(product.price_inr)}</p>
 
                 <div className="mt-4 flex flex-wrap items-center gap-4">
                   <div className="inline-flex items-center border border-blush/30">
@@ -68,7 +69,7 @@ function CartPage() {
                   </button>
                 </div>
               </div>
-              <p className="hidden sm:block font-display text-lg text-blush-soft whitespace-nowrap">{formatPrice(product.price * qty)}</p>
+              <p className="hidden sm:block font-display text-lg text-blush-soft whitespace-nowrap">{formatPrice(product.price_inr * qty)}</p>
             </li>
           ))}
         </ul>
