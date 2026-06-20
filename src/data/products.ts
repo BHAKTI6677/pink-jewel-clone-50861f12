@@ -21,7 +21,7 @@ export type Product = {
   shipping: string;
 };
 
-export const products: Product[] = [
+export const productsRaw: Product[] = [
   {
     id: "rohini-pendant",
     name: "Rohini Pendant",
@@ -145,4 +145,28 @@ export const heroImage = heroImg;
 export const formatPrice = (n: number) =>
   "₹ " + n.toLocaleString("en-IN");
 
-export const getProduct = (id: string) => products.find(p => p.id === id);
+export const getProduct = (id: string) => productsRaw.find(p => p.id === id);
+
+// Adapter to the new CardProduct/CartProduct shape used everywhere.
+export type CardLikeProduct = {
+  id: string;
+  name: string;
+  category: string;
+  price_inr: number;
+  image: string;
+  alt: string;
+  tag?: string;
+  bestseller?: boolean;
+  description: string;
+  materials: string;
+  care: string;
+  shipping: string;
+};
+
+export const toCard = (p: Product): CardLikeProduct => ({
+  id: p.id, name: p.name, category: p.category, price_inr: p.price,
+  image: p.img, alt: p.alt, tag: p.tag, bestseller: p.bestseller,
+  description: p.description, materials: p.materials, care: p.care, shipping: p.shipping,
+});
+
+export const products: CardLikeProduct[] = productsRaw.map(toCard);

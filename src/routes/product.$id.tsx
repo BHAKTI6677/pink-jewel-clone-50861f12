@@ -4,14 +4,14 @@ import { Heart, Minus, Plus, Truck, RotateCcw, Shield } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useShop } from "@/context/ShopContext";
 import { useFormatPrice } from "@/context/CurrencyContext";
-import { getProduct, products } from "@/data/products";
+import { getProduct, products, toCard } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 
 export const Route = createFileRoute("/product/$id")({
   loader: ({ params }) => {
     const p = getProduct(params.id);
     if (!p) throw notFound();
-    return p;
+    return toCard(p);
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -43,7 +43,7 @@ function ProductPage() {
   const liked = wishlist.includes(product.id);
 
   // Mock gallery — same image at different angles
-  const gallery = [product.img, product.img, product.img];
+  const gallery = [product.image, product.image, product.image];
 
   const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
@@ -79,9 +79,11 @@ function ProductPage() {
               alt={product.alt}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <span className="absolute left-4 top-4 bg-maroon-deep/90 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-blush">
-              {product.tag}
-            </span>
+            {product.tag && (
+              <span className="absolute left-4 top-4 bg-maroon-deep/90 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-blush">
+                {product.tag}
+              </span>
+            )}
           </div>
         </div>
 
@@ -89,7 +91,7 @@ function ProductPage() {
         <div>
           <p className="text-[10px] uppercase tracking-[0.24em] text-blush/60">{product.category}</p>
           <h1 className="mt-2 font-display text-4xl text-blush-soft sm:text-5xl">{product.name}</h1>
-          <p className="mt-4 font-display text-2xl text-blush">{formatPrice(product.price)}</p>
+          <p className="mt-4 font-display text-2xl text-blush">{formatPrice(product.price_inr)}</p>
           <p className="mt-1 text-xs text-blush/60">Inclusive of all taxes</p>
 
           <p className="mt-6 text-sm leading-relaxed text-blush/80">{product.description}</p>
@@ -110,9 +112,9 @@ function ProductPage() {
 
           {/* CTAs */}
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <button onClick={() => addToCart(product.id, qty)} className="btn-outline">Add to Bag</button>
+            <button onClick={() => addToCart({ id: product.id, name: product.name, image: product.image, alt: product.alt, category: product.category, price_inr: product.price_inr }, qty)} className="btn-outline">Add to Bag</button>
             <button
-              onClick={() => { addToCart(product.id, qty); setDrawerOpen(false); window.location.assign("/checkout"); }}
+              onClick={() => { addToCart({ id: product.id, name: product.name, image: product.image, alt: product.alt, category: product.category, price_inr: product.price_inr }, qty); setDrawerOpen(false); window.location.assign("/checkout"); }}
               className="btn-primary"
             >
               Buy Now
