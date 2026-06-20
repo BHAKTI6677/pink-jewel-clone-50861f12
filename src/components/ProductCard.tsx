@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useShop } from "@/context/ShopContext";
-import { formatPrice, type Product } from "@/data/products";
+import { useFormatPrice } from "@/context/CurrencyContext";
+import { type Product } from "@/data/products";
 
 export function ProductCard({ product }: { product: Product }) {
   const { addToCart, toggleWishlist, wishlist } = useShop();
+  const formatPrice = useFormatPrice();
   const liked = wishlist.includes(product.id);
 
   return (

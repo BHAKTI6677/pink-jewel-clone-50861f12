@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Heart, Minus, Plus, Truck, RotateCcw, Shield } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useShop } from "@/context/ShopContext";
-import { getProduct, products, formatPrice } from "@/data/products";
+import { useFormatPrice } from "@/context/CurrencyContext";
+import { getProduct, products } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 
 export const Route = createFileRoute("/product/$id")({
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/product/$id")({
 function ProductPage() {
   const product = Route.useLoaderData();
   const { addToCart, setDrawerOpen, toggleWishlist, wishlist } = useShop();
+  const formatPrice = useFormatPrice();
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
   const liked = wishlist.includes(product.id);

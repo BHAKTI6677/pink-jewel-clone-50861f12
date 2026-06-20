@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Minus, Plus, Trash2, Tag } from "lucide-react";
 import { useShop } from "@/context/ShopContext";
-import { formatPrice } from "@/data/products";
+import { useFormatPrice } from "@/context/CurrencyContext";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/cart")({
 
 function CartPage() {
   const { cart, updateQty, removeFromCart, subtotal } = useShop();
+  const formatPrice = useFormatPrice();
   const [promo, setPromo] = useState("");
   const [applied, setApplied] = useState<string | null>(null);
 

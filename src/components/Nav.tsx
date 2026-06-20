@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useShop } from "@/context/ShopContext";
+import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 
 const links = [
   { to: "/shop", label: "Shop" },
@@ -39,6 +40,7 @@ export function Nav() {
 
         {/* Right: actions */}
         <div className="flex items-center gap-3 sm:gap-5 text-blush/80">
+          <CurrencySwitcher />
           <button
             aria-label="Search"
             onClick={() => setSearch(s => !s)}

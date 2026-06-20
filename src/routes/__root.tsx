@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ShopProvider } from "@/context/ShopContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { CartDrawer } from "@/components/CartDrawer";
@@ -109,16 +110,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ShopProvider>
-        <div className="min-h-screen bg-background text-foreground flex flex-col">
-          <Nav />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-          <CartDrawer />
-        </div>
-      </ShopProvider>
+      <CurrencyProvider>
+        <ShopProvider>
+          <div className="min-h-screen bg-background text-foreground flex flex-col">
+            <Nav />
+            <main className="flex-1">
+              <Outlet />
+            </main>
+            <Footer />
+            <CartDrawer />
+          </div>
+        </ShopProvider>
+      </CurrencyProvider>
     </QueryClientProvider>
   );
 }

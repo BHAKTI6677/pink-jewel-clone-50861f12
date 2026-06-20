@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { CreditCard, Lock } from "lucide-react";
 import { useShop } from "@/context/ShopContext";
-import { formatPrice } from "@/data/products";
+import { useFormatPrice } from "@/context/CurrencyContext";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/checkout")({
 
 function Checkout() {
   const { cart, subtotal, clearCart } = useShop();
+  const formatPrice = useFormatPrice();
   const navigate = useNavigate();
   const [payment, setPayment] = useState<"card" | "paypal" | "apple">("card");
   const [placed, setPlaced] = useState(false);
