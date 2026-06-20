@@ -17,7 +17,6 @@ import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as OrderTrackingInfoRouteImport } from './routes/order-tracking-info'
-import { Route as MyOrdersRouteImport } from './routes/my-orders'
 import { Route as InternationalShippingRouteImport } from './routes/international-shipping'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CollectionsRouteImport } from './routes/collections'
@@ -65,11 +64,6 @@ const OurStoryRoute = OurStoryRouteImport.update({
 const OrderTrackingInfoRoute = OrderTrackingInfoRouteImport.update({
   id: '/order-tracking-info',
   path: '/order-tracking-info',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyOrdersRoute = MyOrdersRouteImport.update({
-  id: '/my-orders',
-  path: '/my-orders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternationalShippingRoute = InternationalShippingRouteImport.update({
@@ -121,7 +115,6 @@ export interface FileRoutesByFullPath {
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/international-shipping': typeof InternationalShippingRoute
-  '/my-orders': typeof MyOrdersRoute
   '/order-tracking-info': typeof OrderTrackingInfoRoute
   '/our-story': typeof OurStoryRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
@@ -140,7 +133,6 @@ export interface FileRoutesByTo {
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/international-shipping': typeof InternationalShippingRoute
-  '/my-orders': typeof MyOrdersRoute
   '/order-tracking-info': typeof OrderTrackingInfoRoute
   '/our-story': typeof OurStoryRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
@@ -160,7 +152,6 @@ export interface FileRoutesById {
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/international-shipping': typeof InternationalShippingRoute
-  '/my-orders': typeof MyOrdersRoute
   '/order-tracking-info': typeof OrderTrackingInfoRoute
   '/our-story': typeof OurStoryRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
@@ -181,7 +172,6 @@ export interface FileRouteTypes {
     | '/collections'
     | '/contact'
     | '/international-shipping'
-    | '/my-orders'
     | '/order-tracking-info'
     | '/our-story'
     | '/privacy-policy'
@@ -200,7 +190,6 @@ export interface FileRouteTypes {
     | '/collections'
     | '/contact'
     | '/international-shipping'
-    | '/my-orders'
     | '/order-tracking-info'
     | '/our-story'
     | '/privacy-policy'
@@ -219,7 +208,6 @@ export interface FileRouteTypes {
     | '/collections'
     | '/contact'
     | '/international-shipping'
-    | '/my-orders'
     | '/order-tracking-info'
     | '/our-story'
     | '/privacy-policy'
@@ -239,7 +227,6 @@ export interface RootRouteChildren {
   CollectionsRoute: typeof CollectionsRoute
   ContactRoute: typeof ContactRoute
   InternationalShippingRoute: typeof InternationalShippingRoute
-  MyOrdersRoute: typeof MyOrdersRoute
   OrderTrackingInfoRoute: typeof OrderTrackingInfoRoute
   OurStoryRoute: typeof OurStoryRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
@@ -309,13 +296,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderTrackingInfoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/my-orders': {
-      id: '/my-orders'
-      path: '/my-orders'
-      fullPath: '/my-orders'
-      preLoaderRoute: typeof MyOrdersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/international-shipping': {
       id: '/international-shipping'
       path: '/international-shipping'
@@ -383,7 +363,6 @@ const rootRouteChildren: RootRouteChildren = {
   CollectionsRoute: CollectionsRoute,
   ContactRoute: ContactRoute,
   InternationalShippingRoute: InternationalShippingRoute,
-  MyOrdersRoute: MyOrdersRoute,
   OrderTrackingInfoRoute: OrderTrackingInfoRoute,
   OurStoryRoute: OurStoryRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
@@ -397,3 +376,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
