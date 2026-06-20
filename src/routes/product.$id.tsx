@@ -20,7 +20,7 @@ export const Route = createFileRoute("/product/$id")({
           { name: "description", content: loaderData.description },
           { property: "og:title", content: `${loaderData.name} — SVOJAS.CO` },
           { property: "og:description", content: loaderData.description },
-          { property: "og:image", content: loaderData.img },
+          { property: "og:image", content: loaderData.image },
         ]
       : [],
   }),
