@@ -7,10 +7,10 @@ import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 const links = [
   { to: "/shop", label: "Shop" },
   { to: "/collections", label: "Collections" },
-  { to: "/international-shipping", label: "Shipping" },
-  { to: "/my-orders", label: "My Orders" },
+  { to: "/international-shipping", label: "International Shipping" },
   { to: "/contact", label: "Contact" },
   { to: "/auth", label: "Account" },
+  { to: "/my-orders", label: "My Orders" },
 ] as const;
 
 export function Nav() {
@@ -26,19 +26,7 @@ export function Nav() {
           SVOJAS<span className="text-gold">.</span>CO
         </Link>
 
-        {/* Center: nothing on mobile, links on desktop */}
-        <nav className="hidden lg:flex items-center justify-center gap-9 text-[11px] uppercase tracking-[0.28em] text-blush/80">
-          {links.map(l => (
-            <Link
-              key={l.to}
-              to={l.to}
-              activeProps={{ className: "text-blush" }}
-              className="hover:text-blush transition"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+        <div />
 
         {/* Right: actions */}
         <div className="flex items-center gap-3 sm:gap-5 text-blush/80">
@@ -71,7 +59,7 @@ export function Nav() {
             )}
           </button>
           <button
-            className="lg:hidden hover:text-blush transition"
+            className="hover:text-blush transition"
             onClick={() => setMobile(m => !m)}
             aria-label="Menu"
           >
@@ -100,9 +88,15 @@ export function Nav() {
 
       {/* Mobile nav */}
       {mobile && (
-        <div className="lg:hidden border-t border-border/60 bg-maroon-deep px-6 py-5 flex flex-col gap-4 text-sm uppercase tracking-[0.28em] text-blush/90">
+        <div className="border-t border-border/60 bg-maroon-deep px-6 py-5 flex flex-col gap-4 text-sm uppercase tracking-[0.24em] text-blush/90">
           {links.map(l => (
-            <Link key={l.to} to={l.to} onClick={() => setMobile(false)} className="hover:text-blush">
+            <Link
+              key={l.to}
+              to={l.to}
+              onClick={() => setMobile(false)}
+              activeProps={{ className: "text-blush" }}
+              className="hover:text-blush transition"
+            >
               {l.label}
             </Link>
           ))}
