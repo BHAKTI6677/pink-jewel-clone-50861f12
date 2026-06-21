@@ -21,15 +21,25 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-maroon-deep/95 backdrop-blur-md">
       <div className="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-4 px-5 py-4 lg:px-10">
-        {/* Left: Brand */}
-        <Link to="/" className="font-display text-xl tracking-[0.32em] text-blush sm:text-2xl sm:tracking-[0.4em]">
+        {/* Left: Hamburger */}
+        <button
+          className="text-blush/80 hover:text-blush transition justify-self-start"
+          onClick={() => setMobile(m => !m)}
+          aria-label="Menu"
+        >
+          {mobile ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+
+        {/* Center: Brand */}
+        <Link
+          to="/"
+          className="justify-self-center font-display text-xl tracking-[0.32em] text-blush sm:text-2xl sm:tracking-[0.4em] whitespace-nowrap"
+        >
           SVOJAS<span className="text-gold">.</span>CO
         </Link>
 
-        <div />
-
         {/* Right: actions */}
-        <div className="flex items-center gap-3 sm:gap-5 text-blush/80">
+        <div className="flex items-center gap-3 sm:gap-5 text-blush/80 justify-self-end">
           <CurrencySwitcher />
           <button
             aria-label="Search"
@@ -57,13 +67,6 @@ export function Nav() {
                 {count}
               </span>
             )}
-          </button>
-          <button
-            className="hover:text-blush transition"
-            onClick={() => setMobile(m => !m)}
-            aria-label="Menu"
-          >
-            {mobile ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>

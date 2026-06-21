@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { products, categories, heroImage } from "@/data/products";
+import { products, heroImage } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import atelierImg from "@/assets/atelier.jpg";
+import { useSlides, useSiteCategories, resolveImage } from "@/hooks/use-site-content";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,6 +32,28 @@ function Home() {
 }
 
 function Hero() {
+  const { data: slides } = useSlides();
+  const items = (slides && slides.length > 0)
+    ? slides
+    : [{
+        id: "default",
+        image_url: heroImage,
+        alt_text: "Layered gold necklaces with maroon ruby and pink rose quartz pendants",
+        headline: "Worn today. Inherited tomorrow.",
+        subtext: "SVOJAS.CO crafts premium jewellery for occasions, cherishable moments and real milestones.",
+        link_url: "/collections",
+        sort: 0,
+        active: true,
+      }];
+  const [idx, setIdx] = useState(0);
+  useEffect(() => { setIdx(0); }, [items.length]);
+  useEffect(() => {
+    if (items.length < 2) return;
+    const t = setInterval(() => setIdx(i => (i + 1) % items.length), 5000);
+    return () => clearInterval(t);
+  }, [items.length]);
+  const current = items[idx];
+
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-6 py-12 lg:grid-cols-12 lg:gap-10 lg:px-10 lg:py-16">
@@ -45,20 +69,59 @@ function Hero() {
             Everyday statements made to celebrate the extraordinary in you.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/shop" className="btn-primary">Shop the Collection</Link>
-            <Link to="/our-story" className="btn-outline">Our Story</Link>
+            <Link to="/collections" className="btn-primary">Shop the Collection</Link>
           </div>
         </div>
         <div className="lg:col-span-6">
           <div className="relative">
             <div className="absolute -inset-3 -rotate-1 bg-maroon/60 rounded-sm" aria-hidden />
-            <img
-              src={heroImage}
-              alt="Layered gold necklaces with maroon ruby and pink rose quartz pendants"
-              width={1080}
-              height={1920}
-              className="relative aspect-[4/5] w-full rounded-sm object-cover shadow-2xl shadow-black/30"
-            />
+            <Link to={current.link_url || "/collections"} className="block relative aspect-[4/5] w-full overflow-hidden rounded-sm shadow-2xl shadow-black/30 bg-maroon/40">
+              {items.map((s, i) => (
+                <img
+                  key={s.id}
+                  src={resolveImage(s.image_url) || heroImage}
+                  alt={s.alt_text || "New arrival"}
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}
+                />
+              ))}
+              {(current.headline || current.subtext) && (
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-deep/90 via-maroon-deep/30 to-transparent p-5 text-center">
+                  {current.headline && <p className="font-display text-xl text-blush-soft sm:text-2xl">{current.headline}</p>}
+                  {current.subtext && <p className="mt-1 text-xs uppercase tracking-[0.24em] text-blush/80">{current.subtext}</p>}
+                </div>
+              )}
+            </Link>
+            {items.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setIdx(i => (i - 1 + items.length) % items.length)}
+                  aria-label="Previous slide"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIdx(i => (i + 1) % items.length)}
+                  aria-label="Next slide"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                  {items.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setIdx(i)}
+                      aria-label={`Slide ${i + 1}`}
+                      className={`h-1.5 w-6 rounded-full transition ${i === idx ? "bg-blush" : "bg-blush/30"}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -89,6 +152,8 @@ function Marquee() {
 }
 
 function FeaturedCategories() {
+  const { data: cats } = useSiteCategories();
+  const items = cats ?? [];
   return (
     <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
       <div className="text-center">
@@ -96,7 +161,7 @@ function FeaturedCategories() {
         <h2 className="mt-3 font-display text-3xl text-blush-soft sm:text-4xl">Find your piece</h2>
       </div>
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-        {categories.map(c => (
+        {items.map(c => (
           <Link
             key={c.slug}
             to="/shop"
@@ -104,7 +169,7 @@ function FeaturedCategories() {
             className="group relative block overflow-hidden bg-maroon/40 aspect-[3/4]"
           >
             <img
-              src={c.img}
+              src={resolveImage(c.image_url)}
               alt={c.label}
               loading="lazy"
               className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"

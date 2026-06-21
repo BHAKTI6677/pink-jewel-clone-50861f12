@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      home_slides: {
+        Row: {
+          active: boolean
+          alt_text: string
+          created_at: string
+          headline: string
+          id: string
+          image_url: string
+          link_url: string
+          sort: number
+          subtext: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          alt_text?: string
+          created_at?: string
+          headline?: string
+          id?: string
+          image_url?: string
+          link_url?: string
+          sort?: number
+          subtext?: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          alt_text?: string
+          created_at?: string
+          headline?: string
+          id?: string
+          image_url?: string
+          link_url?: string
+          sort?: number
+          subtext?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -211,6 +250,39 @@ export type Database = {
           full_name?: string | null
           id?: string
           phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_categories: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          image_url: string
+          label: string
+          slug: string
+          sort: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          image_url?: string
+          label: string
+          slug: string
+          sort?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          image_url?: string
+          label?: string
+          slug?: string
+          sort?: number
           updated_at?: string
         }
         Relationships: []

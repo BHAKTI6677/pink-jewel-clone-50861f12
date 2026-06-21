@@ -26,6 +26,8 @@ function AdminLayout() {
         </div>
         <nav className="flex gap-5 text-[11px] uppercase tracking-[0.28em] text-blush/70">
           <Link to="/admin" activeOptions={{ exact: true }} activeProps={{ className: "text-blush" }} className="hover:text-blush">Products</Link>
+          <Link to="/admin/slides" activeProps={{ className: "text-blush" }} className="hover:text-blush">Slideshow</Link>
+          <Link to="/admin/categories" activeProps={{ className: "text-blush" }} className="hover:text-blush">Categories</Link>
           <Link to="/admin/orders" activeProps={{ className: "text-blush" }} className="hover:text-blush">Orders</Link>
         </nav>
       </header>
