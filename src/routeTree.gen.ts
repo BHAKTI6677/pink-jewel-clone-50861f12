@@ -31,6 +31,7 @@ import { Route as AuthenticatedMyOrdersRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedMyOrdersIdRouteImport } from './routes/_authenticated/my-orders.$id'
+import { Route as AuthenticatedAdminSlidesRouteImport } from './routes/_authenticated/admin.slides'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin.orders'
 
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
@@ -142,6 +143,12 @@ const AuthenticatedMyOrdersIdRoute = AuthenticatedMyOrdersIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AuthenticatedMyOrdersRoute,
 } as any)
+const AuthenticatedAdminSlidesRoute =
+  AuthenticatedAdminSlidesRouteImport.update({
+    id: '/slides',
+    path: '/slides',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminOrdersRoute =
   AuthenticatedAdminOrdersRouteImport.update({
     id: '/orders',
@@ -170,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/my-orders': typeof AuthenticatedMyOrdersRouteWithChildren
   '/product/$id': typeof ProductIdRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/admin/slides': typeof AuthenticatedAdminSlidesRoute
   '/my-orders/$id': typeof AuthenticatedMyOrdersIdRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -193,6 +201,7 @@ export interface FileRoutesByTo {
   '/my-orders': typeof AuthenticatedMyOrdersRouteWithChildren
   '/product/$id': typeof ProductIdRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/admin/slides': typeof AuthenticatedAdminSlidesRoute
   '/my-orders/$id': typeof AuthenticatedMyOrdersIdRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -219,6 +228,7 @@ export interface FileRoutesById {
   '/_authenticated/my-orders': typeof AuthenticatedMyOrdersRouteWithChildren
   '/product/$id': typeof ProductIdRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/_authenticated/admin/slides': typeof AuthenticatedAdminSlidesRoute
   '/_authenticated/my-orders/$id': typeof AuthenticatedMyOrdersIdRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/my-orders'
     | '/product/$id'
     | '/admin/orders'
+    | '/admin/slides'
     | '/my-orders/$id'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/my-orders'
     | '/product/$id'
     | '/admin/orders'
+    | '/admin/slides'
     | '/my-orders/$id'
     | '/admin'
   id:
@@ -293,6 +305,7 @@ export interface FileRouteTypes {
     | '/_authenticated/my-orders'
     | '/product/$id'
     | '/_authenticated/admin/orders'
+    | '/_authenticated/admin/slides'
     | '/_authenticated/my-orders/$id'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -474,6 +487,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyOrdersIdRouteImport
       parentRoute: typeof AuthenticatedMyOrdersRoute
     }
+    '/_authenticated/admin/slides': {
+      id: '/_authenticated/admin/slides'
+      path: '/slides'
+      fullPath: '/admin/slides'
+      preLoaderRoute: typeof AuthenticatedAdminSlidesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/orders': {
       id: '/_authenticated/admin/orders'
       path: '/orders'
@@ -486,11 +506,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
+  AuthenticatedAdminSlidesRoute: typeof AuthenticatedAdminSlidesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
+  AuthenticatedAdminSlidesRoute: AuthenticatedAdminSlidesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
