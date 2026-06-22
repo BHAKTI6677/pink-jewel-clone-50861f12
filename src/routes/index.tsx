@@ -33,7 +33,6 @@ function Home() {
 }
 
 function Hero() {
-function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto max-w-3xl px-6 py-16 text-center lg:py-24">
