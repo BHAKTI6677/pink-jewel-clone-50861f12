@@ -262,6 +262,41 @@ function Editorial() {
   );
 }
 
+function HScroller({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const scrollBy = (dir: 1 | -1) => {
+    const el = ref.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.85), behavior: "smooth" });
+  };
+  return (
+    <div className={`relative ${className}`}>
+      <div
+        ref={ref}
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {children}
+      </div>
+      <button
+        type="button"
+        onClick={() => scrollBy(-1)}
+        aria-label="Scroll left"
+        className="hidden md:grid absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => scrollBy(1)}
+        aria-label="Scroll right"
+        className="hidden md:grid absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+      >
+        <ChevronRight className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
+
 function ExpandableStory() {
   const [expanded, setExpanded] = useState(false);
   return (
