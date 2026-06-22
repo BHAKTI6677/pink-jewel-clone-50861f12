@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { z } from "zod";
-import { categories, products as staticProducts } from "@/data/products";
+import { categories as fallbackCategories, products as staticProducts } from "@/data/products";
 import { useProducts, resolveImage } from "@/hooks/use-products";
+import { useSiteCategories } from "@/hooks/use-site-content";
 import { ProductCard } from "@/components/ProductCard";
 import { SlidersHorizontal, X } from "lucide-react";
 
@@ -36,6 +37,10 @@ function Shop() {
   const [maxPrice, setMaxPrice] = useState(100000);
   const [mobileFilters, setMobileFilters] = useState(false);
   const { data: dbProducts } = useProducts();
+  const { data: dbCats } = useSiteCategories();
+  const categories = (dbCats && dbCats.length > 0)
+    ? dbCats.map(c => ({ slug: c.slug, label: c.label }))
+    : fallbackCategories.map(c => ({ slug: c.slug, label: c.label }));
 
   const all = useMemo(() => {
     if (dbProducts && dbProducts.length) {
@@ -152,9 +157,32 @@ function Shop() {
 
           {filtered.length === 0 ? (
             <p className="text-blush/60 py-20 text-center">No pieces match your filters.</p>
-          ) : (
+          ) : category || tag ? (
             <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map(p => <ProductCard key={p.id} product={p} />)}
+            </div>
+          ) : (
+            <div className="space-y-16">
+              {categories.map(c => {
+                const items = filtered.filter(p => p.category === c.slug);
+                if (items.length === 0) return null;
+                return (
+                  <section key={c.slug} id={`section-${c.slug}`}>
+                    <div className="flex items-end justify-between border-b border-border/40 pb-3">
+                      <h2 className="font-display text-2xl text-blush-soft sm:text-3xl">{c.label}</h2>
+                      <button
+                        onClick={() => setCategory(c.slug)}
+                        className="text-[11px] uppercase tracking-[0.28em] text-blush/80 hover:text-blush"
+                      >
+                        View all →
+                      </button>
+                    </div>
+                    <div className="mt-6 grid gap-x-5 gap-y-8 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3">
+                      {items.map(p => <ProductCard key={p.id} product={p} />)}
+                    </div>
+                  </section>
+                );
+              })}
             </div>
           )}
         </div>
