@@ -75,6 +75,7 @@ function SlideModal({ slide, onClose, onSaved }: { slide: Slide | null; onClose:
     link_url: slide?.link_url ?? "/collections",
     sort: slide?.sort ?? 0,
     active: slide?.active ?? true,
+    placement: slide?.placement ?? "hero",
   });
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -134,6 +135,13 @@ function SlideModal({ slide, onClose, onSaved }: { slide: Slide | null; onClose:
             <F label="Link URL"><input value={form.link_url} onChange={e => setForm({ ...form, link_url: e.target.value })} className={inp} placeholder="/collections or /shop" /></F>
             <F label="Sort order"><input type="number" value={form.sort} onChange={e => setForm({ ...form, sort: Number(e.target.value) })} className={inp} /></F>
           </div>
+          <F label="Placement">
+            <select value={form.placement} onChange={e => setForm({ ...form, placement: e.target.value })} className={inp}>
+              <option value="hero">Hero (top of home)</option>
+              <option value="new_arrivals">New Arrivals carousel</option>
+              <option value="story">Our Story image</option>
+            </select>
+          </F>
           <label className="flex items-center gap-2 text-sm text-blush/80">
             <input type="checkbox" checked={form.active} onChange={e => setForm({ ...form, active: e.target.checked })} /> Active (visible on home)
           </label>
