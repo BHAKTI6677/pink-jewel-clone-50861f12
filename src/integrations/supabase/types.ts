@@ -23,6 +23,7 @@ export type Database = {
           id: string
           image_url: string
           link_url: string
+          placement: string
           sort: number
           subtext: string
           updated_at: string
@@ -35,6 +36,7 @@ export type Database = {
           id?: string
           image_url?: string
           link_url?: string
+          placement?: string
           sort?: number
           subtext?: string
           updated_at?: string
@@ -47,6 +49,7 @@ export type Database = {
           id?: string
           image_url?: string
           link_url?: string
+          placement?: string
           sort?: number
           subtext?: string
           updated_at?: string
