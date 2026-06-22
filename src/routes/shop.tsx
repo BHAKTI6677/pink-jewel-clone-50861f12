@@ -8,6 +8,7 @@ import { SlidersHorizontal, X } from "lucide-react";
 
 const searchSchema = z.object({
   category: z.string().optional(),
+  tag: z.string().optional(),
 });
 
 export const Route = createFileRoute("/shop")({
@@ -29,7 +30,7 @@ const SORTS = [
 ] as const;
 
 function Shop() {
-  const { category } = Route.useSearch();
+  const { category, tag } = Route.useSearch();
   const navigate = Route.useNavigate();
   const [sort, setSort] = useState<typeof SORTS[number]["id"]>("featured");
   const [maxPrice, setMaxPrice] = useState(100000);
@@ -50,22 +51,23 @@ function Shop() {
   const filtered = useMemo(() => {
     let list = [...all];
     if (category) list = list.filter(p => p.category === category);
+    if (tag) list = list.filter(p => p.tag?.toLowerCase() === tag.toLowerCase());
     list = list.filter(p => p.price_inr <= maxPrice);
     if (sort === "price-asc") list.sort((a, b) => a.price_inr - b.price_inr);
     else if (sort === "price-desc") list.sort((a, b) => b.price_inr - a.price_inr);
     else if (sort === "bestseller") list.sort((a, b) => Number(b.bestseller) - Number(a.bestseller));
     return list;
-  }, [all, category, sort, maxPrice]);
+  }, [all, category, tag, sort, maxPrice]);
 
   const setCategory = (slug: string | undefined) =>
-    navigate({ search: slug ? { category: slug } : {} });
+    navigate({ search: slug ? { category: slug, tag } : tag ? { tag } : {} });
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10 lg:py-14">
       <header className="mb-8 border-b border-border/40 pb-6">
         <p className="eyebrow">The Collection</p>
         <h1 className="mt-3 font-display text-4xl text-blush-soft sm:text-5xl">
-          {category ?? "All Pieces"}
+          {tag === "New" ? "New Arrivals" : (category ?? "All Pieces")}
         </h1>
         <p className="mt-2 text-sm text-blush/60">{filtered.length} pieces</p>
       </header>

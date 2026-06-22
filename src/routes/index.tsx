@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { products, heroImage } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
@@ -23,6 +23,7 @@ function Home() {
     <>
       <Hero />
       <Marquee />
+      <NewArrivals />
       <FeaturedCategories />
       <Trending products={trending} />
       <BrandStory />
@@ -32,18 +33,37 @@ function Home() {
 }
 
 function Hero() {
-  const { data: slides } = useSlides();
+  return (
+    <section className="relative overflow-hidden">
+      <div className="mx-auto max-w-3xl px-6 py-16 text-center lg:py-24">
+        <h1 className="font-display text-5xl leading-[1.02] text-blush-soft sm:text-6xl lg:text-7xl">
+          Worn today.
+          <br />
+          <em className="text-blush">Inherited</em> tomorrow.
+        </h1>
+        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-blush/70">
+          SVOJAS.CO crafts premium jewellery for occasions, cherishable moments and real milestones.
+          Everyday statements made to celebrate the extraordinary in you.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function NewArrivals() {
+  const { data: slides } = useSlides(false, "new_arrivals");
   const items = (slides && slides.length > 0)
     ? slides
     : [{
-        id: "default",
+        id: "default-na",
         image_url: heroImage,
-        alt_text: "Layered gold necklaces with maroon ruby and pink rose quartz pendants",
-        headline: "Worn today. Inherited tomorrow.",
-        subtext: "SVOJAS.CO crafts premium jewellery for occasions, cherishable moments and real milestones.",
-        link_url: "/collections",
+        alt_text: "New arrivals from SVOJAS.CO",
+        headline: "",
+        subtext: "",
+        link_url: "/shop?tag=New",
         sort: 0,
         active: true,
+        placement: "new_arrivals",
       }];
   const [idx, setIdx] = useState(0);
   useEffect(() => { setIdx(0); }, [items.length]);
@@ -55,75 +75,64 @@ function Hero() {
   const current = items[idx];
 
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-7xl items-center gap-8 px-6 py-12 lg:grid-cols-12 lg:gap-10 lg:px-10 lg:py-16">
-        <div className="lg:col-span-6 lg:pr-6">
-          <p className="eyebrow shimmer">New Arrivals</p>
-          <h1 className="mt-5 font-display text-5xl leading-[1.02] text-blush-soft sm:text-6xl lg:text-7xl">
-            Worn today.
-            <br />
-            <em className="text-blush">Inherited</em> tomorrow.
-          </h1>
-          <p className="mt-5 max-w-md text-base leading-relaxed text-blush/70">
-            SVOJAS.CO crafts premium jewellery for occasions, cherishable moments and real milestones.
-            Everyday statements made to celebrate the extraordinary in you.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/collections" className="btn-primary">Shop the Collection</Link>
-          </div>
-        </div>
-        <div className="lg:col-span-6">
-          <div className="relative">
-            <div className="absolute -inset-3 -rotate-1 bg-maroon/60 rounded-sm" aria-hidden />
-            <Link to={current.link_url || "/collections"} className="block relative aspect-[4/5] w-full overflow-hidden rounded-sm shadow-2xl shadow-black/30 bg-maroon/40">
-              {items.map((s, i) => (
-                <img
-                  key={s.id}
-                  src={resolveImage(s.image_url) || heroImage}
-                  alt={s.alt_text || "New arrival"}
-                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}
+    <section className="mx-auto max-w-3xl px-6 py-12 lg:py-16 text-center">
+      <p className="eyebrow shimmer">New Arrivals</p>
+      <h2 className="mt-3 font-display text-3xl text-blush-soft sm:text-4xl">Just landed</h2>
+      <div className="relative mt-8">
+        <div className="absolute -inset-3 -rotate-1 bg-maroon/60 rounded-sm" aria-hidden />
+        <Link
+          to={current.link_url || "/shop"}
+          className="block relative aspect-[4/5] w-full overflow-hidden rounded-sm shadow-2xl shadow-black/30 bg-maroon/40"
+        >
+          {items.map((s, i) => (
+            <img
+              key={s.id}
+              src={resolveImage(s.image_url) || heroImage}
+              alt={s.alt_text || "New arrival"}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}
+            />
+          ))}
+          {(current.headline || current.subtext) && (
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-deep/90 via-maroon-deep/30 to-transparent p-5 text-center">
+              {current.headline && <p className="font-display text-xl text-blush-soft sm:text-2xl">{current.headline}</p>}
+              {current.subtext && <p className="mt-1 text-xs uppercase tracking-[0.24em] text-blush/80">{current.subtext}</p>}
+            </div>
+          )}
+        </Link>
+        {items.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={() => setIdx(i => (i - 1 + items.length) % items.length)}
+              aria-label="Previous slide"
+              className="absolute left-2 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setIdx(i => (i + 1) % items.length)}
+              aria-label="Next slide"
+              className="absolute right-2 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+              {items.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setIdx(i)}
+                  aria-label={`Slide ${i + 1}`}
+                  className={`h-1.5 w-6 rounded-full transition ${i === idx ? "bg-blush" : "bg-blush/30"}`}
                 />
               ))}
-              {(current.headline || current.subtext) && (
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-deep/90 via-maroon-deep/30 to-transparent p-5 text-center">
-                  {current.headline && <p className="font-display text-xl text-blush-soft sm:text-2xl">{current.headline}</p>}
-                  {current.subtext && <p className="mt-1 text-xs uppercase tracking-[0.24em] text-blush/80">{current.subtext}</p>}
-                </div>
-              )}
-            </Link>
-            {items.length > 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={() => setIdx(i => (i - 1 + items.length) % items.length)}
-                  aria-label="Previous slide"
-                  className="absolute left-2 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIdx(i => (i + 1) % items.length)}
-                  aria-label="Next slide"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 grid h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                  {items.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setIdx(i)}
-                      aria-label={`Slide ${i + 1}`}
-                      className={`h-1.5 w-6 rounded-full transition ${i === idx ? "bg-blush" : "bg-blush/30"}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="mt-7 flex justify-center">
+        <Link to="/shop" search={{ tag: "New" }} className="btn-primary">Shop New Arrivals</Link>
       </div>
     </section>
   );
@@ -155,18 +164,18 @@ function FeaturedCategories() {
   const { data: cats } = useSiteCategories();
   const items = cats ?? [];
   return (
-    <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
+    <section className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-16">
       <div className="text-center">
         <p className="eyebrow">Shop by Category</p>
         <h2 className="mt-3 font-display text-3xl text-blush-soft sm:text-4xl">Find your piece</h2>
       </div>
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+      <HScroller className="mt-8">
         {items.map(c => (
           <Link
             key={c.slug}
             to="/shop"
             search={{ category: c.slug }}
-            className="group relative block overflow-hidden bg-maroon/40 aspect-[3/4]"
+            className="group relative block shrink-0 snap-start overflow-hidden bg-maroon/40 aspect-[3/4] w-[180px] sm:w-[200px] lg:w-[220px]"
           >
             <img
               src={resolveImage(c.image_url)}
@@ -175,13 +184,13 @@ function FeaturedCategories() {
               className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-maroon-deep/90 via-maroon-deep/20 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-5 text-center">
-              <p className="font-display text-xl text-blush-soft">{c.label}</p>
+            <div className="absolute inset-x-0 bottom-0 p-4 text-center">
+              <p className="font-display text-base text-blush-soft">{c.label}</p>
               <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-blush/80">Explore →</p>
             </div>
           </Link>
         ))}
-      </div>
+      </HScroller>
     </section>
   );
 }
@@ -189,7 +198,7 @@ function FeaturedCategories() {
 function Trending({ products }: { products: typeof import("@/data/products").products }) {
   return (
     <section className="border-y border-border bg-maroon/20">
-      <div className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
+      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-16">
         <div className="flex flex-col items-start justify-between gap-3 md:flex-row md:items-end">
           <div>
             <p className="eyebrow">Best Sellers</p>
@@ -199,37 +208,38 @@ function Trending({ products }: { products: typeof import("@/data/products").pro
             Shop All →
           </Link>
         </div>
-        <div className="mt-10 grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map(p => <ProductCard key={p.id} product={p} />)}
-        </div>
+        <HScroller className="mt-8">
+          {products.map(p => (
+            <div key={p.id} className="shrink-0 snap-start w-[180px] sm:w-[210px] lg:w-[230px]">
+              <ProductCard product={p} />
+            </div>
+          ))}
+        </HScroller>
       </div>
     </section>
   );
 }
 
 function BrandStory() {
+  const { data: storyImgs } = useSlides(false, "story");
+  const storyImg = storyImgs?.[0]?.image_url ? resolveImage(storyImgs[0].image_url) : atelierImg;
+  const storyAlt = storyImgs?.[0]?.alt_text || "An artisan setting a gemstone by hand in the SVOJAS atelier";
   return (
-    <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
-      <div className="grid gap-8 lg:grid-cols-12 lg:gap-12 items-center">
-        <div className="lg:col-span-6">
-          <img
-            src={atelierImg}
-            alt="An artisan setting a gemstone by hand in the SVOJAS atelier"
-            loading="lazy"
-            width={1600}
-            height={1100}
-            className="aspect-[4/5] w-full object-cover"
-          />
-        </div>
-        <div className="lg:col-span-6">
-          <p className="eyebrow">Our Story</p>
-          <h2 className="mt-4 font-display text-3xl leading-tight text-blush-soft sm:text-4xl">
-            Crafted by Obsession,<br />
-            Inspired by Love:<br />
-            <em className="text-blush">The SVOJAS.CO story.</em>
-          </h2>
-          <ExpandableStory />
-        </div>
+    <section className="mx-auto max-w-4xl px-6 py-14 lg:py-20 text-center">
+      <p className="eyebrow">Our Story</p>
+      <h2 className="mt-4 font-display text-3xl leading-tight text-blush-soft sm:text-4xl">
+        Crafted by Obsession,<br />
+        Inspired by Love:<br />
+        <em className="text-blush">The SVOJAS.CO story.</em>
+      </h2>
+      <img
+        src={storyImg}
+        alt={storyAlt}
+        loading="lazy"
+        className="mx-auto mt-8 aspect-[4/5] w-full max-w-xl object-cover"
+      />
+      <div className="mx-auto mt-8 max-w-xl text-left">
+        <ExpandableStory />
       </div>
     </section>
   );
@@ -249,6 +259,41 @@ function Editorial() {
         <p className="mt-6 text-sm uppercase tracking-[0.32em] text-blush/80">— Bhakti Bandak, Founder</p>
       </div>
     </section>
+  );
+}
+
+function HScroller({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const scrollBy = (dir: 1 | -1) => {
+    const el = ref.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.85), behavior: "smooth" });
+  };
+  return (
+    <div className={`relative ${className}`}>
+      <div
+        ref={ref}
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {children}
+      </div>
+      <button
+        type="button"
+        onClick={() => scrollBy(-1)}
+        aria-label="Scroll left"
+        className="hidden md:grid absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => scrollBy(1)}
+        aria-label="Scroll right"
+        className="hidden md:grid absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-9 w-9 place-items-center rounded-full bg-maroon-deep/80 text-blush hover:bg-maroon-deep"
+      >
+        <ChevronRight className="h-4 w-4" />
+      </button>
+    </div>
   );
 }
 

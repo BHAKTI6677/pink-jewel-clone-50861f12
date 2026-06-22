@@ -11,6 +11,7 @@ export type Slide = {
   link_url: string;
   sort: number;
   active: boolean;
+  placement: string;
 };
 
 export type SiteCategory = {
@@ -22,12 +23,13 @@ export type SiteCategory = {
   active: boolean;
 };
 
-export function useSlides(adminAll = false) {
+export function useSlides(adminAll = false, placement?: string) {
   return useQuery({
-    queryKey: ["home_slides", adminAll ? "all" : "active"],
+    queryKey: ["home_slides", adminAll ? "all" : "active", placement ?? "any"],
     queryFn: async (): Promise<Slide[]> => {
       let q = supabase.from("home_slides").select("*").order("sort", { ascending: true });
       if (!adminAll) q = q.eq("active", true);
+      if (placement) q = q.eq("placement", placement);
       const { data, error } = await q;
       if (error) throw error;
       return (data ?? []) as Slide[];
