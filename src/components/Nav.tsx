@@ -6,7 +6,6 @@ import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 
 const links = [
   { to: "/shop", label: "Shop" },
-  { to: "/collections", label: "Collections" },
   { to: "/international-shipping", label: "International Shipping" },
   { to: "/contact", label: "Contact" },
   { to: "/auth", label: "Account" },
