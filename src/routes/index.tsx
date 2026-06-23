@@ -229,9 +229,11 @@ function BrandStory() {
       <p className="eyebrow">Our Story</p>
       <h2 className="mt-4 font-display text-3xl leading-tight text-blush-soft sm:text-4xl">
         Crafted by Obsession,<br />
-        Inspired by Love:<br />
-        <em className="text-blush">The SVOJAS.CO story.</em>
+        Inspired by Love:
       </h2>
+      <p className="mt-4 font-display text-2xl tracking-[0.32em] text-blush sm:text-3xl sm:tracking-[0.4em]">
+        SVOJAS<span className="text-gold">.</span>CO
+      </p>
       <img
         src={storyImg}
         alt={storyAlt}
