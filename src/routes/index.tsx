@@ -4,6 +4,7 @@ import { products, heroImage } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import atelierImg from "@/assets/atelier.jpg";
 import { useSlides, useSiteCategories, resolveImage } from "@/hooks/use-site-content";
+import { useProducts, resolveImage as resolveProductImage, type DbProduct } from "@/hooks/use-products";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -17,15 +18,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const trending = products.filter(p => p.bestseller).slice(0, 4);
-
   return (
     <>
       <Hero />
       <Marquee />
       <NewArrivals />
       <FeaturedCategories />
-      <Trending products={trending} />
+      <CategoryShowcase />
+      <Trending />
       <BrandStory />
       <Editorial />
     </>
@@ -195,7 +195,39 @@ function FeaturedCategories() {
   );
 }
 
-function Trending({ products }: { products: typeof import("@/data/products").products }) {
+function shuffle<T>(arr: T[]): T[] {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function dbToCard(p: DbProduct) {
+  return {
+    id: p.slug,
+    name: p.name,
+    category: p.category,
+    price_inr: p.price_inr,
+    image: resolveProductImage(p.image_url),
+    alt: p.alt_text || p.name,
+    tag: p.tag || undefined,
+  };
+}
+
+function Trending() {
+  const { data: dbProducts } = useProducts();
+  // Pull bestsellers from DB, mix across categories. Fallback to static.
+  const dbBest = (dbProducts ?? []).filter(p => p.bestseller).map(dbToCard);
+  const fallback = products.filter(p => p.bestseller).map(p => ({
+    id: p.id, name: p.name, category: p.category, price_inr: p.price_inr,
+    image: p.image, alt: p.alt, tag: p.tag,
+  }));
+  const pool = dbBest.length > 0 ? dbBest : fallback;
+  // Shuffle once per mount so categories are interleaved, not grouped.
+  const [items] = useState(() => shuffle(pool).slice(0, 8));
+  if (items.length === 0) return null;
   return (
     <section className="border-y border-border bg-maroon/20">
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-16">
@@ -209,13 +241,52 @@ function Trending({ products }: { products: typeof import("@/data/products").pro
           </Link>
         </div>
         <HScroller className="mt-8">
-          {products.map(p => (
+          {items.map(p => (
             <div key={p.id} className="shrink-0 snap-start w-[180px] sm:w-[210px] lg:w-[230px]">
               <ProductCard product={p} />
             </div>
           ))}
         </HScroller>
       </div>
+    </section>
+  );
+}
+
+function CategoryShowcase() {
+  const { data: cats } = useSiteCategories();
+  const { data: dbProducts } = useProducts();
+  const categories = cats ?? [];
+  if (categories.length === 0 || !dbProducts) return null;
+  const sections = categories
+    .map(c => ({ cat: c, items: dbProducts.filter(p => p.category === c.slug).slice(0, 4) }))
+    .filter(s => s.items.length > 0);
+  if (sections.length === 0) return null;
+  return (
+    <section className="mx-auto max-w-7xl px-6 pb-12 lg:px-10 lg:pb-16 space-y-14">
+      {sections.map(({ cat, items }) => (
+        <div key={cat.slug}>
+          <div className="flex items-end justify-between gap-3 border-b border-border pb-4">
+            <div>
+              <p className="eyebrow">{cat.label}</p>
+              <h3 className="mt-2 font-display text-2xl text-blush-soft sm:text-3xl">Shop {cat.label}</h3>
+            </div>
+            <Link
+              to="/shop"
+              search={{ category: cat.slug }}
+              className="text-xs uppercase tracking-[0.28em] text-blush/80 hover:text-blush hover:underline underline-offset-4"
+            >
+              View all →
+            </Link>
+          </div>
+          <HScroller className="mt-6">
+            {items.map(p => (
+              <div key={p.id} className="shrink-0 snap-start w-[180px] sm:w-[210px] lg:w-[230px]">
+                <ProductCard product={dbToCard(p)} />
+              </div>
+            ))}
+          </HScroller>
+        </div>
+      ))}
     </section>
   );
 }
